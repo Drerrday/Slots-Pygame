@@ -11,6 +11,8 @@ BG_IMAGE_PATH = 'graphics/images/bg.png'
 GRID_IMAGE_PATH = 'graphics/images/gridline.png'
 GAME_INDICES = [1, 2, 3] # 0 and 4 are outside of play area
 SYM_PATH = 'graphics/images/symbols'
+MUTED_BUTTON_IMAGE_PATH = 'graphics/images/sound_off.png'
+UNMUTED_BUTTON_IMAGE_PATH = 'graphics/images/sound_on.png'
 
 # Text
 TEXT_COLOR = 'Cyan'

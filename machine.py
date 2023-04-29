@@ -6,7 +6,7 @@ from wins import *
 import pygame
 
 class Machine:
-    def __init__(self):
+    def __init__(self, is_muted=False):
         self.display_surface = pygame.display.get_surface()
         self.machine_balance = 10000.00
         self.reel_index = 0
@@ -15,6 +15,12 @@ class Machine:
         self.spinning = False
         self.can_animate = False
         self.win_animation_ongoing = False
+        self.is_muted = False
+        self.mute_button = pygame.Rect(1300, 933, 32, 32) # Mute button position
+        self.mute_button_muted_image = pygame.image.load(MUTED_BUTTON_IMAGE_PATH)
+        self.mute_button_unmuted_image = pygame.image.load(UNMUTED_BUTTON_IMAGE_PATH)
+        self.mute_button_muted_image = pygame.transform.scale(self.mute_button_muted_image, self.mute_button.size)
+        self.mute_button_unmuted_image = pygame.transform.scale(self.mute_button_unmuted_image, self.mute_button.size)
 
         # Results
         self.prev_result = {0: None, 1: None, 2: None, 3: None, 4: None}
@@ -88,6 +94,23 @@ class Machine:
                 self.reel_list[reel].start_spin(int(reel) * 200)
                 self.spin_sound.play()
                 self.win_animation_ongoing = False
+    
+    def toggle_mute(self):
+        self.is_muted = not self.is_muted
+        if self.is_muted:
+            pygame.mixer.pause()
+        else:
+            pygame.mixer.unpause()
+
+    def draw_mute_button(self):
+        bg_color = (17, 77, 84)
+        pygame.draw.rect(self.display_surface, bg_color, self.mute_button)
+
+        if self.is_muted:
+            image = self.mute_button_muted_image
+        else:
+            image = self.mute_button_unmuted_image
+        self.display_surface.blit(image, self.mute_button.topleft)
 
     def get_result(self):
         for reel in self.reel_list:
@@ -122,6 +145,9 @@ class Machine:
 
     # You need to provide sounds and load them in the Machine init function for this to work!
     def play_win_sound(self, win_data):
+        if self.is_muted:
+            return
+        
         sum = 0
         for item in win_data.values():
             sum += len(item[1])
@@ -155,6 +181,7 @@ class Machine:
             self.reel_list[reel].symbol_list.update()
         self.ui.update()
         self.win_animation()
+        self.draw_mute_button()
 
         # Balance/payout debugger
         # debug_player_data = self.currPlayer.get_data()

@@ -21,6 +21,7 @@ class Game:
         # Sound
         main_sound = pygame.mixer.Sound('audio/track.mp3')
         main_sound.play(loops = -1)
+    
 
     def run(self):
 
@@ -32,6 +33,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if self.machine.mute_button.collidepoint(pos):
+                        self.machine.toggle_mute()
 
             # Time variables
             self.delta_time = (pygame.time.get_ticks() - self.start_time) / 1000
