@@ -35,6 +35,7 @@ class Game:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
+                    # Handle mute button toggle
                     if self.machine.mute_button.collidepoint(pos):
                         self.machine.toggle_mute()
 

@@ -21,3 +21,7 @@ class Player():
         bet = self.bet_size
         self.balance -= bet
         self.total_wager += bet
+
+    def set_bet_size(self, bet_size):
+        self.bet_size = bet_size
+        

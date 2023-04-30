@@ -20,7 +20,7 @@ UI_FONT = 'graphics/font/ComicSansMS3.ttf'
 UI_FONT_SIZE = 30
 WIN_FONT_SIZE = 110
 
-# 5 Symbols for demo
+# 5 Symbols for a harder game
 # symbols = {
 #     'diamond': f"{SYM_PATH}/0_diamond.png", 
 #     'floppy': f"{SYM_PATH}/0_floppy.png",

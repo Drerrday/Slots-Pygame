@@ -62,11 +62,22 @@ class Machine:
     def input(self):
         keys = pygame.key.get_pressed()
 
+        # Increase bet-size using UP Keypad
+        if keys[pygame.K_UP]:
+            new_bet_size = self.currPlayer.bet_size + 1
+            self.currPlayer.set_bet_size(new_bet_size)
+
+        # Decrease bet-size using DOWN Keypad
+        if keys[pygame.K_DOWN] and self.currPlayer.bet_size > 1:
+            new_bet_size = self.currPlayer.bet_size - 1
+            self.currPlayer.set_bet_size(new_bet_size)
+
         # Checks for space key, ability to toggle spin, and balance to cover bet size
         if keys[pygame.K_SPACE] and self.can_toggle and self.currPlayer.balance >= self.currPlayer.bet_size:
             self.toggle_spinning()
             self.spin_time = pygame.time.get_ticks()
             self.currPlayer.place_bet()
+            self.ui.set_bet_size(self.currPlayer.bet_size)
             self.machine_balance += self.currPlayer.bet_size
             self.currPlayer.last_payout = None
             
@@ -180,6 +191,7 @@ class Machine:
             self.reel_list[reel].symbol_list.draw(self.display_surface)
             self.reel_list[reel].symbol_list.update()
         self.ui.update()
+        self.ui.set_bet_size(self.currPlayer.bet_size)
         self.win_animation()
         self.draw_mute_button()
 

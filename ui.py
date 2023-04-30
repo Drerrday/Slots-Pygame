@@ -47,3 +47,8 @@ class UI:
     def update(self):
         pygame.draw.rect(self.display_surface, 'Black', pygame.Rect(0, 900, 1600, 100))
         self.display_info()
+    
+    def set_bet_size(self, bet_size):
+        self.player.set_bet_size(bet_size)
+
+    
